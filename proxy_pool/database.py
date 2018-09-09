@@ -43,10 +43,10 @@ class RedisClient:
         :param proxy: 新增代理
         :param score: 初始化分数
         """
-        score = self.redis.zscore(REDIS_KEY, proxy)
-        if not score:
+        res = self.redis.zscore(REDIS_KEY, proxy)
+        if not res:
             self.redis.zadd(REDIS_KEY, proxy, score)
-        elif score and score < MAX_SCORE:
+        elif res and res < MAX_SCORE:
             self.redis.zincrby(REDIS_KEY, proxy, 1)
 
     def reduce_proxy_score(self, proxy):
