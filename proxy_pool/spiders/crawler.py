@@ -55,7 +55,7 @@ class CrawlerSpider(scrapy.Spider):
                              callback=self.parse_data5u)
         yield scrapy.Request("http://ip.seofangfa.com/",
                              callback=self.parse_seofangfa)
-        for page in range(1, 20):
+        for page in range(1, 5):
             yield scrapy.Request("http://www.xicidaili.com/wn/{}".format(page),
                                  headers=self.xicidaili_headers,
                                  callback=self.parse_xicidaili)
