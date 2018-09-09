@@ -13,9 +13,13 @@ def crawler():
 
 def validate():
     redis = RedisClient()
+    all_proxies = redis.all_proxies()
     logger.info("Validator working...")
     logger.info("Validator website is {}".format(VALIDATOR_BASE_URL))
-    validator.main(redis.all_proxies())
+    if all_proxies:
+        validator.main(redis.all_proxies())
+    else:
+        logger.info("empty proxies")
 
 
 def run_schedule():
