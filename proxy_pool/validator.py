@@ -95,40 +95,41 @@ class Validator:
             if response.status == 200:
                 httpbin = await response.json()
                 origin = httpbin.get('origin', None)
-                if proxy.find(origin):
+                if proxy.find(origin) >= 0:
                     logger.info("{} 高匿".format(proxy))
                     return True
                 else:
                     logger.info("{} 普匿".format(proxy))
                     return False
 
-    async def proxy_connect(self, proxy):
-
+    async def proxy_connect(self, proxy, session):
         async with self.sem:
             try:
-                async with aiohttp.ClientSession() as session:
-                    anonymous_res = await self.validate_anonymous(session, proxy)
-                    if anonymous_res:
-                        douban_res = await self.validate_douban_movie(session, proxy)
-                        if douban_res:
-                            # douban access
-                            self.redis.add_proxy(proxy=proxy, score=1)
-                            return
-                    self.redis.reduce_proxy_score(proxy)
+                anonymous_res = await self.validate_anonymous(session, proxy)
+                if anonymous_res:
+                    douban_res = await self.validate_douban_movie(session, proxy)
+                    if douban_res:
+                        # douban access
+                        self.redis.add_proxy(proxy=proxy, score=1)
+                        return
+                self.redis.reduce_proxy_score(proxy)
             except Exception as error:
                 logger.info("{} 验证失败 {}".format(proxy, error))
                 self.redis.reduce_proxy_score(proxy)
                 return False
 
+    async def init(self, loop, proxies):
+        async with aiohttp.ClientSession(connector=self.conn, loop=loop) as session:
+            tasks = []
+            for proxy in proxies:
+                if isinstance(proxy, bytes):
+                    proxy = proxy.decode("utf8")
+                tasks.append(self.proxy_connect(proxy=proxy, session=session))
+            await asyncio.wait(tasks)
+
     def main(self, proxies):
         loop = asyncio.get_event_loop()
-        tasks = []
-        for proxy in proxies:
-            if isinstance(proxy, bytes):
-                proxy = proxy.decode("utf8")
-            tasks.append(self.proxy_connect(proxy=proxy))
-        if tasks:
-            loop.run_until_complete(asyncio.wait(tasks))
+        loop.run_until_complete(self.init(loop=loop, proxies=proxies))
 
 
 validator = Validator()

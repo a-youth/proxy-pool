@@ -24,7 +24,7 @@ class RedisClient:
     """
 
     def __init__(
-        self, host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD
+            self, host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD
     ):
         conn_pool = redis.ConnectionPool(
             host=host,
@@ -43,8 +43,11 @@ class RedisClient:
         :param proxy: 新增代理
         :param score: 初始化分数
         """
-        if not self.redis.zscore(REDIS_KEY, proxy):
+        score = self.redis.zscore(REDIS_KEY, proxy)
+        if not score:
             self.redis.zadd(REDIS_KEY, proxy, score)
+        elif score and score < MAX_SCORE:
+            self.redis.zincrby(REDIS_KEY, proxy, 1)
 
     def reduce_proxy_score(self, proxy):
         """
