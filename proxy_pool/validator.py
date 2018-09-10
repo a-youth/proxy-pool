@@ -4,7 +4,7 @@ import socket
 import requests
 from .logger import logger
 from .database import RedisClient
-from .settings import VALIDATOR_BASE_URL
+from .settings import VALIDATOR_BASE_URL, REQUEST_TIMEOUT
 
 
 def get_host_ip():
@@ -21,7 +21,7 @@ def get_host_ip():
 class Validator:
 
     def __init__(self):
-        self.timeout = 5
+        self.timeout = REQUEST_TIMEOUT or 8
         concurrency = 100
         self.concurrency = concurrency
         """
