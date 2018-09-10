@@ -113,6 +113,8 @@ class Validator:
                         self.redis.add_proxy(proxy=proxy, score=1)
                         return
                 self.redis.reduce_proxy_score(proxy)
+            except asyncio.TimeoutError:
+                logger.info("{} 验证超时".format(proxy))
             except Exception as error:
                 logger.info("{} 验证失败 {}".format(proxy, error))
                 self.redis.reduce_proxy_score(proxy)
@@ -130,9 +132,3 @@ class Validator:
     def main(self, proxies):
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.init(loop=loop, proxies=proxies))
-
-
-validator = Validator()
-
-if __name__ == "__main__":
-    validator.main(proxies=["https://183.154.215.78:9000"])

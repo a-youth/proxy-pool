@@ -44,3 +44,5 @@ CRAWLER_RUN_CYCLE = 30
 VALIDATOR_RUN_CYCLE = 15
 # 校验器测试网站，可以定向改为自己想爬取的网站，如新浪，知乎等
 VALIDATOR_BASE_URL = "https://httpbin.org/get?show_env=1"
+# 请求超时时间
+REQUEST_TIMEOUT = 8

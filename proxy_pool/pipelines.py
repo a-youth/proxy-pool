@@ -4,7 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-from .validator import validator
+from .validator import Validator
 
 
 class ProxyPollPipeline(object):
@@ -16,4 +16,5 @@ class ProxyPollPipeline(object):
         return item
 
     def close_spider(self, spider):
+        validator = Validator()
         validator.main(self.proxies)

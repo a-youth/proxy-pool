@@ -4,7 +4,7 @@ import os
 import time
 from proxy_pool.logger import logger
 from proxy_pool.database import RedisClient
-from proxy_pool.validator import validator
+from proxy_pool.validator import Validator
 
 
 def crawler():
@@ -14,6 +14,7 @@ def crawler():
 def validate():
     redis = RedisClient()
     all_proxies = redis.all_proxies()
+    validator = Validator()
     logger.info("Validator working...")
     logger.info("Validator website is {}".format(VALIDATOR_BASE_URL))
     if all_proxies:

@@ -2,7 +2,7 @@ import asyncio
 from proxy_pool.database import RedisClient
 import time
 import aiohttp
-from proxy_pool.validator import validator
+from proxy_pool.validator import Validator
 
 now = lambda: time.time()
 
@@ -64,9 +64,7 @@ if __name__ == '__main__':
     # key = 'demo'
     # # redis.add_proxy(key, 1)
     # redis.reduce_proxy_score(key)
-
-    validator.main(['http://47.105.95.203:80'])
+    validator = Validator()
+    validator.main(['http://190.214.10.238:21776'])
 
     print('TIME: ', now() - start)
-
-
