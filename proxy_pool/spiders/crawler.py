@@ -26,10 +26,6 @@ class CrawlerSpider(scrapy.Spider):
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,ja;q=0.6,la;q=0.5",
         "Cache-Control": "max-age=0",
         "Connection": "keep-alive",
-        "Cookie": "_free_proxy_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJTJjNDcxNmJmNmI0YzViZDA1NTlkOTNlNWIyMTAz"
-                  "ODJlBjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMXFVRnNDVUJqam11L010eWVLYUJHTVZQbkxXQXV2ZUNuSXJjS1NMZTJXVn"
-                  "M9BjsARg%3D%3D--11dee86176d8b5744e050301d8f612e0df6adcf1; Hm_lvt_0cf76c77469e965d2957f0553e6ecf59="
-                  "1536225422,1536245878; Hm_lpvt_0cf76c77469e965d2957f0553e6ecf59=1536246012",
         "Host": "www.xicidaili.com",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) "
                       "Chrome/68.0.3440.106 Safari/537.36"

@@ -2,6 +2,7 @@ import asyncio
 from proxy_pool.database import RedisClient
 import time
 import aiohttp
+from proxy_pool.validator import validator
 
 now = lambda: time.time()
 
@@ -55,9 +56,17 @@ async def init(loop, proxies):
 
 if __name__ == '__main__':
     start = now()
-    proxies = redis.all_proxies()
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(init(loop=loop, proxies=proxies))
+    # proxies = redis.all_proxies()
+    # loop = asyncio.get_event_loop()
+    # loop.run_until_complete(init(loop=loop, proxies=proxies))
+
+    # client = redis.redis
+    # key = 'demo'
+    # # redis.add_proxy(key, 1)
+    # redis.reduce_proxy_score(key)
+
+    validator.main(['http://47.105.95.203:80'])
+
     print('TIME: ', now() - start)
 
 
