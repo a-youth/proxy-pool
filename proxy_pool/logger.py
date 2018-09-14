@@ -9,7 +9,7 @@ def get_logger():
     创建日志实例
     """
     formatter = logging.Formatter("%(asctime)s - %(message)s")
-    logger = logging.getLogger("monitor")
+    logger = logging.getLogger("proxy")
     logger.setLevel(logging.INFO)
 
     ch = logging.StreamHandler()

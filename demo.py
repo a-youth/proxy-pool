@@ -65,6 +65,6 @@ if __name__ == '__main__':
     # # redis.add_proxy(key, 1)
     # redis.reduce_proxy_score(key)
     validator = Validator()
-    validator.main(['http://190.214.10.238:21776'])
+    validator.main(['http://103.103.182.56:59567'])
 
     print('TIME: ', now() - start)

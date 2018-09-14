@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-import time, asyncio, aiohttp
+import asyncio, aiohttp
 import socket
 import requests
 from .logger import logger
 from .database import RedisClient
 from .settings import VALIDATOR_BASE_URL, REQUEST_TIMEOUT
+import re
 
 
 def get_host_ip():
@@ -45,7 +46,7 @@ class Validator:
             "Referer": "https://www.douban.com/",
             'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
         }
-        async with session.get(url="https://movie.douban.com/subject/26861685/?from=showing",
+        async with session.get(url="https://movie.douban.com/subject/26752088/",
                                proxy=proxy,
                                timeout=self.timeout,
                                headers=headers) as response:
@@ -53,8 +54,14 @@ class Validator:
                 logger.info("{} douban error".format(proxy))
                 return False
             else:
-                logger.info("{} douban access".format(proxy))
-                return True
+                body = await response.text(encoding="utf-8")
+                pattern = "https://sec.douban.com"
+                res = re.findall(pattern, body)
+                if not res:
+                    logger.info("{} douban access".format(proxy))
+                    return True
+                else:
+                    logger.info("{} forward sec.douban.com".format(proxy))
 
     def validate_proxy(self, proxies):
         # try:
