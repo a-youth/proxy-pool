@@ -119,7 +119,9 @@ class Validator:
                     #     # douban access
                     #     self.redis.add_proxy(proxy=proxy, score=1)
                     #     return
-                    self.redis.reduce_proxy_score(proxy)
+                    self.redis.add_proxy(proxy=proxy, score=1)
+                else:
+                    self.redis.add_proxy(proxy=proxy, score=1)
             except asyncio.TimeoutError:
                 logger.info("{} 验证超时".format(proxy))
             except Exception as error:
