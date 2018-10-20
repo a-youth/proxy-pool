@@ -21,6 +21,6 @@ def proxyIp():
 
 if __name__ == '__main__':
     """
-    FLASK_APP=app.py flask run
+    nohup python app.py
     """
     app.run(host='0.0.0.0', port=80, debug=True)
