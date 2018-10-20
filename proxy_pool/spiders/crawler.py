@@ -60,11 +60,11 @@ class CrawlerSpider(scrapy.Spider):
         for page in range(1, 10):
             yield scrapy.Request("https://www.cool-proxy.net/proxies?sort=score&direction=desc&page={}".format(page),
                                  callback=self.parse_cool_proxy)
-        for page in range(1, 20):
-            if page < 9:
-                page = '0{}'.format(page)
-            yield SplashRequest("http://nntime.com/proxy-list-{}.htm".format(page),
-                                callback=self.parse_nntime)
+        # for page in range(1, 20):
+        #     if page < 9:
+        #         page = '0{}'.format(page)
+        #     yield SplashRequest("http://nntime.com/proxy-list-{}.htm".format(page),
+        #                         callback=self.parse_nntime)
         yield scrapy.Request("http://www.xiaohexia.cn/getip.php?num=100&protocol=https&format=json",
                              callback=self.parse_xiaohexia)
         yield scrapy.Request("https://31f.cn/https-proxy/",
@@ -82,13 +82,13 @@ class CrawlerSpider(scrapy.Spider):
             yield scrapy.Request("http://www.xicidaili.com/wn/{}".format(page),
                                  headers=self.xicidaili_headers,
                                  callback=self.parse_xicidaili)
-        for page in range(0, 15):
-            yield SplashRequest(url="http://proxydb.net/?protocol=https&country=&offset={}".format(page * 15),
-                                headers=self.proxy_db_headers,
-                                callback=self.parse_proxydb)
-
-        yield SplashRequest(url="http://www.site-digger.com/html/articles/20110516/proxieslist.html",
-                            callback=self.parse_digger)
+        # for page in range(0, 15):
+        #     yield SplashRequest(url="http://proxydb.net/?protocol=https&country=&offset={}".format(page * 15),
+        #                         headers=self.proxy_db_headers,
+        #                         callback=self.parse_proxydb)
+        #
+        # yield SplashRequest(url="http://www.site-digger.com/html/articles/20110516/proxieslist.html",
+        #                     callback=self.parse_digger)
 
     def parse_66ip(self, response):
         pattern = "\d+\.\d+.\d+\.\d+:\d+"
