@@ -75,27 +75,22 @@ class RedisClient:
         """
         返回一个代理
         """
-        # 第一次尝试取分数最高，也就是最新可用的代理
+        # 7-10
         first_chance = self.redis.zrangebyscore(
-            REDIS_KEY, MAX_SCORE, MAX_SCORE
+            REDIS_KEY, MIN_SCORE, MAX_SCORE
         )
+        # decode("utf8")
         if first_chance:
-            return random.choice(first_chance)
-
+            proxy = random.choice(first_chance)
         else:
-            # 第二次尝试取 7-10 分数的任意一个代理
+            # 第二次尝试取 0-10 分数的任意一个代理
             second_chance = self.redis.zrangebyscore(
-                REDIS_KEY, MAX_SCORE - 3, MAX_SCORE
+                REDIS_KEY, 0, MAX_SCORE
             )
             if second_chance:
-                return random.choice(second_chance)
-            # 最后一次就随便取咯
-            else:
-                last_chance = self.redis.zrangebyscore(
-                    REDIS_KEY, MIN_SCORE, MAX_SCORE
-                )
-                if last_chance:
-                    return random.choice(last_chance)
+                proxy = random.choice(second_chance)
+
+        return proxy.decode('utf-8')
 
     def get_proxies(self, count=1):
         """

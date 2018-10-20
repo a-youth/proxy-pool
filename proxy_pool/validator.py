@@ -114,12 +114,12 @@ class Validator:
             try:
                 anonymous_res = await self.validate_anonymous(session, proxy)
                 if anonymous_res:
-                    douban_res = await self.validate_douban_movie(session, proxy)
-                    if douban_res:
-                        # douban access
-                        self.redis.add_proxy(proxy=proxy, score=1)
-                        return
-                self.redis.reduce_proxy_score(proxy)
+                    # douban_res = await self.validate_douban_movie(session, proxy)
+                    # if douban_res:
+                    #     # douban access
+                    #     self.redis.add_proxy(proxy=proxy, score=1)
+                    #     return
+                    self.redis.reduce_proxy_score(proxy)
             except asyncio.TimeoutError:
                 logger.info("{} 验证超时".format(proxy))
             except Exception as error:
