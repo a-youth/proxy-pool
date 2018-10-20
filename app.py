@@ -13,7 +13,7 @@ def hello():
 
 @app.route('/proxy-ip')
 def proxyIp():
-    res = redis_client.get_proxies(count=10)
+    res = redis_client.get_proxies(count=100)
     proxyIp = list()
     for ip in res:
         proxyIp.append(ip.strip('http://'))
