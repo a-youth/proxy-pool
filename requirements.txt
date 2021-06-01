@@ -36,7 +36,7 @@ scrapy-splash==0.7.2
 service-identity==17.0.0
 six==1.11.0
 Twisted==18.7.0
-urllib3==1.23
+urllib3==1.26.5
 w3lib==1.19.0
 Werkzeug==0.14.1
 yarl==1.2.6
